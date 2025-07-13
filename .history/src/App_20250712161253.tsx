@@ -5,7 +5,7 @@ import { PostCard } from './components/PostCard';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Configuracao from './pages/Configuracao';
 import LoginModal from './components/LoginModal';
-import { validateUserSupabase } from './database/supabaseService';
+import { validateUser } from './database/sqlite';
 
 function Home({ onConfigClick }: { onConfigClick: () => void }) {
   const { licoes } = useData();
@@ -82,9 +82,8 @@ function AppRoutes() {
     }
   };
 
-  const handleLogin = async (login: string, senha: string) => {
-    const valid = await validateUserSupabase(login, senha);
-    if (valid) {
+  const handleLogin = (login: string, senha: string) => {
+    if (validateUser(login, senha)) {
       setIsAuth(true);
       setLoginModalOpen(false);
       setLoginError(undefined);

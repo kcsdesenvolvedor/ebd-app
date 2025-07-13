@@ -5,11 +5,12 @@ import { PostCard } from './components/PostCard';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Configuracao from './pages/Configuracao';
 import LoginModal from './components/LoginModal';
-import { validateUserSupabase } from './database/supabaseService';
+import { validateUser } from './database/sqlite';
 
 function Home({ onConfigClick }: { onConfigClick: () => void }) {
   const { licoes } = useData();
   const [indice, setIndice] = useState(0);
+  const navigate = useNavigate();
 
   const proximaLicao = () => {
     setIndice((prev) => (prev + 1) % licoes.length);
@@ -68,7 +69,7 @@ function ProtectedRoute({ isAuth, children }: { isAuth: boolean; children: React
   return <>{children}</>;
 }
 
-function AppRoutes() {
+function App() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [loginError, setLoginError] = useState<string | undefined>(undefined);
@@ -82,9 +83,8 @@ function AppRoutes() {
     }
   };
 
-  const handleLogin = async (login: string, senha: string) => {
-    const valid = await validateUserSupabase(login, senha);
-    if (valid) {
+  const handleLogin = (login: string, senha: string) => {
+    if (validateUser(login, senha)) {
       setIsAuth(true);
       setLoginModalOpen(false);
       setLoginError(undefined);
@@ -100,33 +100,25 @@ function AppRoutes() {
   };
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home onConfigClick={handleConfigClick} />} />
-        <Route
-          path="/configuracao"
-          element={
-            <ProtectedRoute isAuth={isAuth}>
-              <Configuracao />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-      <LoginModal
-        open={loginModalOpen}
-        onClose={handleCloseModal}
-        onLogin={handleLogin}
-        error={loginError}
-      />
-    </>
-  );
-}
-
-function App() {
-  return (
     <DataProvider>
       <Router>
-        <AppRoutes />
+        <Routes>
+          <Route path="/" element={<Home onConfigClick={handleConfigClick} />} />
+          <Route
+            path="/configuracao"
+            element={
+              <ProtectedRoute isAuth={isAuth}>
+                <Configuracao />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <LoginModal
+          open={loginModalOpen}
+          onClose={handleCloseModal}
+          onLogin={handleLogin}
+          error={loginError}
+        />
       </Router>
     </DataProvider>
   );

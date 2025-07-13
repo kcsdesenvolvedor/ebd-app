@@ -5,7 +5,7 @@ import { PostCard } from './components/PostCard';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Configuracao from './pages/Configuracao';
 import LoginModal from './components/LoginModal';
-import { validateUserSupabase } from './database/supabaseService';
+import { validateUser } from './database/sqlite';
 
 function Home({ onConfigClick }: { onConfigClick: () => void }) {
   const { licoes } = useData();
@@ -20,7 +20,7 @@ function Home({ onConfigClick }: { onConfigClick: () => void }) {
   };
 
   return (
-    <div className="p-2 min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+    <div className="p-3 min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="flex gap-4 mb-4">
         <button
           onClick={licaoAnterior}
@@ -82,9 +82,8 @@ function AppRoutes() {
     }
   };
 
-  const handleLogin = async (login: string, senha: string) => {
-    const valid = await validateUserSupabase(login, senha);
-    if (valid) {
+  const handleLogin = (login: string, senha: string) => {
+    if (validateUser(login, senha)) {
       setIsAuth(true);
       setLoginModalOpen(false);
       setLoginError(undefined);
