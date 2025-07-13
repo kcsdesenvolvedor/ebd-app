@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/kcsdesenvolvedor/ebd-app/static/css/main.d6c56b01.css",
+    "main.js": "/kcsdesenvolvedor/ebd-app/static/js/main.8e76deb5.js",
+    "static/js/453.d3d47b08.chunk.js": "/kcsdesenvolvedor/ebd-app/static/js/453.d3d47b08.chunk.js",
+    "index.html": "/kcsdesenvolvedor/ebd-app/index.html",
+    "main.d6c56b01.css.map": "/kcsdesenvolvedor/ebd-app/static/css/main.d6c56b01.css.map",
+    "main.8e76deb5.js.map": "/kcsdesenvolvedor/ebd-app/static/js/main.8e76deb5.js.map",
+    "453.d3d47b08.chunk.js.map": "/kcsdesenvolvedor/ebd-app/static/js/453.d3d47b08.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d6c56b01.css",
+    "static/js/main.8e76deb5.js"
+  ]
+}
