@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ebd-app/static/css/main.d6c56b01.css",
-    "main.js": "/ebd-app/static/js/main.c4aae364.js",
+    "main.js": "/ebd-app/static/js/main.c50ae67b.js",
     "static/js/453.d3d47b08.chunk.js": "/ebd-app/static/js/453.d3d47b08.chunk.js",
     "index.html": "/ebd-app/index.html",
     "main.d6c56b01.css.map": "/ebd-app/static/css/main.d6c56b01.css.map",
-    "main.c4aae364.js.map": "/ebd-app/static/js/main.c4aae364.js.map",
+    "main.c50ae67b.js.map": "/ebd-app/static/js/main.c50ae67b.js.map",
     "453.d3d47b08.chunk.js.map": "/ebd-app/static/js/453.d3d47b08.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d6c56b01.css",
-    "static/js/main.c4aae364.js"
+    "static/js/main.c50ae67b.js"
   ]
 }
