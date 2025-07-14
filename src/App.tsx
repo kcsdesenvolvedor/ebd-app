@@ -7,7 +7,7 @@ import Configuracao from './pages/Configuracao';
 import LoginModal from './components/LoginModal';
 import { validateUserSupabase } from './database/supabaseService';
 
-function Home({ onConfigClick }: { onConfigClick: () => void }) {
+function Home() {
   const { licoes } = useData();
   const [indice, setIndice] = useState(0);
 
@@ -35,12 +35,6 @@ function Home({ onConfigClick }: { onConfigClick: () => void }) {
           disabled={licoes.length === 0}
         >
           Próxima
-        </button>
-        <button
-          onClick={onConfigClick}
-          className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition"
-        >
-          Configuração
         </button>
       </div>
       {licoes.length === 0 ? (
@@ -74,13 +68,13 @@ function AppRoutes() {
   const [loginError, setLoginError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
 
-  const handleConfigClick = () => {
-    if (!isAuth) {
+  // Exibe o modal de login automaticamente ao acessar /configuracao se não autenticado
+  const location = useLocation();
+  React.useEffect(() => {
+    if (location.pathname === '/configuracao' && !isAuth) {
       setLoginModalOpen(true);
-    } else {
-      navigate('/configuracao');
     }
-  };
+  }, [location.pathname, isAuth]);
 
   const handleLogin = async (login: string, senha: string) => {
     const valid = await validateUserSupabase(login, senha);
@@ -88,7 +82,7 @@ function AppRoutes() {
       setIsAuth(true);
       setLoginModalOpen(false);
       setLoginError(undefined);
-      navigate('/configuracao');
+      navigate('/configuracao', { replace: true });
     } else {
       setLoginError('Login ou senha inválidos');
     }
@@ -97,12 +91,15 @@ function AppRoutes() {
   const handleCloseModal = () => {
     setLoginModalOpen(false);
     setLoginError(undefined);
+    if (!isAuth) {
+      navigate('/');
+    }
   };
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home onConfigClick={handleConfigClick} />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/configuracao"
           element={
